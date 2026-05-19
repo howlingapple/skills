@@ -1,0 +1,58 @@
+{
+  "name": "lightrag",
+  "version": "1.0.0",
+  "description": "基于 LightRAG 的知识图谱问答技能",
+  "tools": [
+    {
+      "name": "lightrag_load_documents",
+      "description": "加载文档并构建 LightRAG 知识图谱索引",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "data_path": {
+            "type": "string",
+            "description": "文档目录路径"
+          },
+          "working_dir": {
+            "type": "string",
+            "description": "索引存储目录，默认 ./lightrag_db"
+          }
+        },
+        "required": ["data_path"]
+      }
+    },
+    {
+      "name": "lightrag_query",
+      "description": "查询 LightRAG 知识图谱",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "查询问题"
+          },
+          "mode": {
+            "type": "string",
+            "enum": ["naive", "local", "global", "hybrid"],
+            "description": "查询模式，默认 hybrid"
+          }
+        },
+        "required": ["prompt"]
+      }
+    },
+    {
+      "name": "lightrag_compare_modes",
+      "description": "对比不同查询模式的结果",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "查询问题"
+          }
+        },
+        "required": ["prompt"]
+      }
+    }
+  ]
+}

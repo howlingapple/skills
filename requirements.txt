@@ -1,0 +1,29 @@
+# LightRAG Skill Dependencies
+# 使用本地 LightRAG 源码（skills/lightrag/lightrag/）
+
+# OpenAI 兼容 API 支持
+openai>=1.0.0
+
+# 本地 Embedding 模型支持（可选）
+sentence-transformers>=2.2.0
+transformers>=4.30.0
+torch>=2.0.0
+
+# 文档解析（本地 MinerU）
+mineru>=0.3.0
+llama-index-core>=0.12.0
+
+# PDF 备用解析
+PyPDF2>=3.0.0
+
+# Word 文档解析
+python-docx>=0.8.11
+
+# 重试机制
+tenacity>=8.0.0
+
+# 配置管理
+pyyaml
+
+# 开发工具
+pytest

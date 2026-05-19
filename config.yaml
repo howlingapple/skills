@@ -1,0 +1,64 @@
+# LightRAG Skill Configuration
+# 使用 LightRAG 框架替代自研 GraphRAG
+
+graphrag:
+  name: "lightrag"
+  description: "基于 LightRAG 的知识图谱问答技能"
+  
+  # LLM 配置
+  llm:
+    provider: "api"
+    api_base_url: "https://api.deepseek.com"
+    api_key: ""
+    api_model_id: "deepseek-v4-flash"
+    enable_thinking: false
+    default_kwargs:
+      max_tokens: 2048
+      temperature: 0.7
+      top_p: 0.9
+  
+  # Embedding 配置 - 使用本地 Qwen3 Embedding 模型
+  embedding:
+    provider: "local"
+    model_name: "F:\\学习资料\\qwen3.5\\Qwen3-Embedding-0.6B"
+    embedding_dim: 1024
+    local_model_path: "F:\\学习资料\\qwen3.5\\Qwen3-Embedding-0.6B"
+  
+  # 文档解析器
+  # 新增解析器只需在 parsers 下添加条目，无需改代码
+  # 每个解析器需指定:
+  #   module: Python 模块路径
+  #   class:  类名
+  #   method: 调用方法, 默认 load_data(file_path) -> List[obj.text]
+  #   params: 初始化参数(可选)
+  document_parser:
+    provider: "mineru_local"
+    parsers:
+      pypdf2:
+        module: "lightrag_skill"
+        class: "parse_pdf_simple"
+      mineru_local:
+        module: "mineru_local_reader"
+        class: "MinerULocalReader"
+        method: "load_data"
+        params:
+          enable_table: true
+          enable_formula: true
+          enable_ocr: false
+          split_pages: true
+          lang: "ch"
+  
+  # 检索配置
+  retrieval:
+    default_mode: "local"  # naive/local/global/hybrid
+    similarity_top_k: 15
+  
+  # 文档目录（load_documents 的默认路径）
+  docs_dir: "./reference"
+
+  # LightRAG 特定配置
+  lightrag:
+    working_dir: "./lightrag_db"
+    chunk_token_size: 1200
+    chunk_overlap_token_size: 100
+   
